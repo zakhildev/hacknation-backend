@@ -34,7 +34,6 @@ export class AppGateway implements OnGatewayConnection {
     socket: Socket,
     @MessageBody() body: IAskBody,
   ): Promise<WsResponse<ChatCompletionMessage>> {
-    this.logger.debug(socket);
     const response = await this.ai.ask(body, DOCUMENT_PROMPT);
     return {
       event: 'response',

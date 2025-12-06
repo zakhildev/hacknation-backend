@@ -16,4 +16,10 @@ export class AppController {
   extractPDF(@UploadedFile() file: Express.Multer.File) {
     return this.appService.extractPDF(file);
   }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  extract(@UploadedFile() file: Express.Multer.File) {
+    return this.appService.extract(file);
+  }
 }

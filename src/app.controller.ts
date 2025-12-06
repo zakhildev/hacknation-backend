@@ -11,12 +11,6 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('upload/pdf')
-  @UseInterceptors(FileInterceptor('file'))
-  extractPDF(@UploadedFile() file: Express.Multer.File) {
-    return this.appService.extractPDF(file);
-  }
-
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   extract(@UploadedFile() file: Express.Multer.File) {

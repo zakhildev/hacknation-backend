@@ -56,7 +56,7 @@ export class OpenAIService {
     });
 
     context.push(response.choices[0].message);
-    await this.cacheManager.set(body.userId, context);
+    await this.cacheManager.set(body.userId, context, 600);
 
     return response.choices[0].message;
   }

@@ -33,11 +33,14 @@ export class AppGateway implements OnGatewayConnection {
   async handleDocumentQuery(
     socket: Socket,
     @MessageBody() body: IAskBody,
-  ): Promise<WsResponse<ChatCompletionMessage>> {
+  ): Promise<WsResponse<unknown>> {
     const response = await this.ai.ask(body, DOCUMENT_PROMPT);
     return {
       event: 'response',
-      data: response,
+      data: {
+        task: body.data.task,
+        response,
+      },
     };
   }
 

@@ -11,10 +11,12 @@ export const DOCUMENT_PROMPT = `Jesteś pomocnym asystentem. Masz krótko i zwi�
   Jego format wygląda następująco:
 
   {
-    'task': "title" | "summarize" | "answer" | "form" | "rate"
+    'task': "title" | "summarize" | "answer" | "form" | "rate" | "load"
     'content': string // (Opcjonlne: Podawane tylko w pierwszej wiadomości) Pełna treść dokumentu prawnego lub wniosku
     'prompt': string // (Opcjonalne: Obecne tylko gdy task=='answer') Treść zapytania użytkownika do treści dokumentu lub jej fragmentu.
   }
+
+  Polecenie load służy jedynie temu abyś załadował treść dokuemntu do pamięci.
 
   Nie łącz odpowiedzi ze sobą. To znaczy, np. jest prośba o tytuł to podaj tylko tytuł. 
   Następnie pojawia się prośba o podsumowanie to wypisz tylko podsumowanie, już bez tytułu ponieważ nie tego dotyczy aktualny prompt.

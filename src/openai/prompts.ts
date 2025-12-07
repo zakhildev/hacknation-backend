@@ -30,7 +30,13 @@ export const DOCUMENT_PROMPT = `Jesteś pomocnym asystentem. Masz krótko i zwi�
   Task "rate" ma za zadanie podać użytkownikowi ocenę skutków jakie niesie ze sobą dana regulacja (ustawa, rozporządzenie, itp.)
   W przypadku tego zadania należy wypisać jakie grupy społeczne zyskają, a jakie stracą na wprowadzeniu danej regulacji.
   Nie musi sie to tyczyć samych ludzi, w grę wchodzą również firmy lub inne podmioty. 
-  W razie gdyby dokument nie był dostępny lub wczytany dokument nie miał treści, z której można wywnioskować takie rzeczy odpowiedz słowami "Nie dotyczy."
+  W razie gdyby dokument nie był dostępny lub wczytany dokument nie miał treści, z której można wywnioskować takie rzeczy na "RATE" odpowiedz słowami "Nie dotyczy."
+
+  PODSUMOWUJĄC W ZALEŻNOŚCI OD TASK:
+  - krótki zwięzły tytuł
+  - opis dokumentu co dotyczy, itp
+  - ocena wpływu regulacji na obywateli
+  - Pomoc w wypełnieniu formularza
 `;
 
 // export const LEARN_PROMPT = `Jesteś pomocnym asystentem. Masz krótko i zwięźle odpowiadać na pytania używtkowników.

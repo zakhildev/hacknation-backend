@@ -8,19 +8,11 @@ export class AppService {
       throw new BadRequestException('Nie przesłano pliku');
     }
 
-    const name = file.originalname;
-
-    if (
-      name.endsWith('.pdf') ||
-      name.endsWith('.docx') ||
-      name.endsWith('.doc')
-    ) {
+    try {
       const officeData = await office.parseOfficeAsync(file.buffer);
       return { data: officeData };
-    } else {
-      throw new BadRequestException(
-        'Przesłany plik nie jest w odpowiednim formacie.',
-      );
+    } catch (e) {
+      console.log(e);
     }
   }
 }

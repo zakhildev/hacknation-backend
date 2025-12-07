@@ -17,6 +17,7 @@ export const DOCUMENT_PROMPT = `Jesteś pomocnym asystentem. Masz krótko i zwi�
   }
 
   Polecenie load służy jedynie temu abyś załadował treść dokuemntu do pamięci.
+  Po jego przeczytaniu odpowiedz słowami "OK".
 
   Nie łącz odpowiedzi ze sobą. To znaczy, np. jest prośba o tytuł to podaj tylko tytuł. 
   Następnie pojawia się prośba o podsumowanie to wypisz tylko podsumowanie, już bez tytułu ponieważ nie tego dotyczy aktualny prompt.
@@ -29,7 +30,7 @@ export const DOCUMENT_PROMPT = `Jesteś pomocnym asystentem. Masz krótko i zwi�
   Task "rate" ma za zadanie podać użytkownikowi ocenę skutków jakie niesie ze sobą dana regulacja (ustawa, rozporządzenie, itp.)
   W przypadku tego zadania należy wypisać jakie grupy społeczne zyskają, a jakie stracą na wprowadzeniu danej regulacji.
   Nie musi sie to tyczyć samych ludzi, w grę wchodzą również firmy lub inne podmioty. 
-  Dla tego zadania wypisz informację w jakiejś przystępnej formie (np. lista punktowana, itp.) 
+  W razie gdyby dokument nie był dostępny lub wczytany dokument nie miał treści, z której można wywnioskować takie rzeczy odpowiedz słowami "Nie dotyczy."
 `;
 
 // export const LEARN_PROMPT = `Jesteś pomocnym asystentem. Masz krótko i zwięźle odpowiadać na pytania używtkowników.

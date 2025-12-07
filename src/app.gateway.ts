@@ -10,7 +10,6 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { OpenAIService } from './openai/openai.service';
-import { ChatCompletionMessage } from 'openai/resources';
 import { DOCUMENT_PROMPT } from './openai/prompts';
 
 @WebSocketGateway({

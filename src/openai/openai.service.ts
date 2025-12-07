@@ -1,36 +1,51 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import type { Cache } from 'cache-manager';
 import OpenAI from 'openai';
 import type {
   ChatCompletionMessage,
   ChatCompletionMessageParam,
 } from 'openai/resources';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class OpenAIService {
   constructor(
     private configService: ConfigService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private prisma: PrismaService,
   ) {}
 
   private readonly ai = new OpenAI({
     baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai/',
   });
 
-  private logger = new Logger('OpenAI');
-
   async ask(
     body: IAskBody,
     systemPrompt: string,
   ): Promise<ChatCompletionMessage> {
-    if (body.clearMemory) await this.cacheManager.del(body.userId);
+    let currentCache = await this.prisma.cache.findFirst({
+      where: { socketId: body.userId },
+    });
 
-    const context =
-      (await this.cacheManager.get<ChatCompletionMessageParam[]>(
-        body.userId,
-      )) || [];
+    if (!currentCache) {
+      currentCache = await this.prisma.cache.create({
+        data: {
+          cache: '',
+          socketId: body.userId,
+        },
+      });
+    }
+
+    let context: ChatCompletionMessageParam[] = [];
+
+    if (currentCache?.cache) {
+      try {
+        context = JSON.parse(
+          currentCache.cache,
+        ) as ChatCompletionMessageParam[];
+      } catch {
+        context = [];
+      }
+    }
 
     if (context.length == 0) {
       context.push(
@@ -56,7 +71,15 @@ export class OpenAIService {
     });
 
     context.push(response.choices[0].message);
-    await this.cacheManager.set(body.userId, context, 600);
+
+    await this.prisma.cache.upsert({
+      where: { socketId: body.userId, id: currentCache.id },
+      update: { cache: JSON.stringify(context) },
+      create: {
+        socketId: body.userId,
+        cache: JSON.stringify(context),
+      },
+    });
 
     return response.choices[0].message;
   }

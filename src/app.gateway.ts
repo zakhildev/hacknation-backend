@@ -6,6 +6,7 @@ import {
   WebSocketServer,
   OnGatewayConnection,
   WsResponse,
+  ConnectedSocket,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { OpenAIService } from './openai/openai.service';
@@ -31,9 +32,10 @@ export class AppGateway implements OnGatewayConnection {
 
   @SubscribeMessage('query')
   async handleDocumentQuery(
-    socket: Socket,
+    @ConnectedSocket() socket: Socket,
     @MessageBody() body: IAskBody,
   ): Promise<WsResponse<unknown>> {
+    body.userId = socket.id;
     const response = await this.ai.ask(body, DOCUMENT_PROMPT);
     return {
       event: 'response',
